@@ -104,7 +104,9 @@ def bapif(uid,pwx):
     except Exception as e:print(e)
       
 ___pot___ = "10000"
-for ixx in range(int(limit)):khalifa=str(random.choice(range(1000000000,1999999999)));user.append(khalifa)
+limit=500
+user = []
+for ixx in range(int(limit)):khalifa=str(random.choice(range(3000000000,3999999999)));user.append(khalifa)
 with ThreadPool(max_workers=40) as ____iloveyou____:
 for lover in user:
   ids = ___pot___+lover
