@@ -4,7 +4,7 @@
 import os,requests,json,time
 import re,random,sys,uuid,string,subprocess
 from concurrent.futures import ThreadPoolExecutor as ThreadPool
-
+ualist = []
 def logo():
     os.system("clear")
     print(f"""{white}""")
