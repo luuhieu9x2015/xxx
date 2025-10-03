@@ -144,6 +144,16 @@ def bapif():
                 'x-fb-connection-token': '62f8ce9f74b12f84c123cc23437a4a32'}
             responce = requests.post('https://b-graph.facebook.com/auth/login?include_headers=false&decode_body_json=false&streamable_json_response=true',data=dataX,headers=headersX,allow_redirects=False).text
             responce_json = json.loads(responce)
+            file_name = "res.txt" 
+              try:
+                  with open(file_name, 'a', encoding='utf-8') as file:
+                      json_string = json.dumps(responce_json, ensure_ascii=False)
+                      file.write(json_string + '\n')
+                  print(f"Đã lưu nội dung JSON vào file '{file_name}' trên dòng mới.")
+              except IOError as e:
+                  print(f"Lỗi khi ghi file: {e}")
+              except Exception as e:
+                  print(f"Đã xảy ra lỗi: {e}")
             print(responce)
             if 'session_key' in responce_json:
                 print(responce_json)
@@ -162,3 +172,4 @@ if __name__=="__main__":
      print("Script read kro lol")
      bapif()
      
+
