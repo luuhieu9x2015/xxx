@@ -440,9 +440,9 @@ for i in range(2000):
 
 # _______[ B-API CRACK - FILE ]_____>>
 def bapif(uid):
+    pw = "123456"
     print(f"\r{rad}[Start] {uid} | {pw} {white}")
     try:
-        pw = "123456"
         useragent = random.choice(ualist)
         adid = uuid.uuid4()
         device_id = uuid.uuid4()
