@@ -456,7 +456,7 @@ def bapif(uid):
             "locale": 'en_US"',
             "client_country_code": "US",
             "fb_api_req_friendly_name": "authenticate",
-            "api_key": "62f8ce9f74b12f84c123cc23437a4a32",
+            "api_key": "882a8490361da98702bf97a021ddc14d",
             "access_token": "350685531728|62f8ce9f74b12f84c123cc23437a4a32",
             "sig":"62f8ce9f74b12f84c123cc23437a4a32"
         }
@@ -555,3 +555,4 @@ if __name__ == "__main__":
     for i in uids:
         bapif(i)
     print("End check")
+
