@@ -558,5 +558,5 @@ if __name__ == "__main__":
         "100004646889275",
     ]
     for i in uids:
-        login(username=i, password="123456")
+        login(i, "123456")
     print("End check")
